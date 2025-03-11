@@ -32,7 +32,7 @@ def validateInput(n, grid)
   raise ArgumentError, "n must be an odd integer" if n.even?
   raise ArgumentError, "grid is empty" if grid.empty?
   if grid.size != n || grid.first.size != n
-    raise ArgumentError, "grid must be the same length as given integer"
+    raise ArgumentError, "grid must have the same row and column count as given integer"
   end
   true
 end
