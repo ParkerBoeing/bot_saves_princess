@@ -1,8 +1,6 @@
 require 'rspec'
 require_relative '../../lib/game/runner'
 
-BOARD_SIZE = 5
-
 RSpec.describe 'Bot Saves Princess methods' do
   describe '#generateBoard' do
     let(:bot_pos) { [2, 2] }
@@ -107,6 +105,62 @@ RSpec.describe 'Bot Saves Princess methods' do
       princess_pos = [2, 4]
       expected_moves = (2 - 2).abs + (4 - 1).abs
       expect(calculateOptimalMoves(bot_pos, princess_pos)).to eq(3)
+    end
+  end
+
+  describe '#moveBot' do
+    let(:initial_position) { [2, 2] }
+
+    it "moves up correctly" do
+      expect(moveBot(initial_position, "up")).to eq([1, 2])
+    end
+
+    it "moves down correctly" do
+      expect(moveBot(initial_position, "down")).to eq([3, 2])
+    end
+
+    it "moves left correctly" do
+      expect(moveBot(initial_position, "left")).to eq([2, 1])
+    end
+
+    it "moves right correctly" do
+      expect(moveBot(initial_position, "right")).to eq([2, 3])
+    end
+
+    it "is case insensitive" do
+      expect(moveBot(initial_position, "UP")).to eq([1, 2])
+    end
+
+    it "returns the same position for an invalid direction" do
+      expect(moveBot(initial_position, "invalid")).to eq(initial_position)
+    end
+  end
+
+  describe '#validPosition?' do
+    it "returns true for a position within board boundaries" do
+      expect(validPosition?([0, 0])).to be true
+      expect(validPosition?([BOARD_SIZE - 1, BOARD_SIZE - 1])).to be true
+      expect(validPosition?([2, 3])).to be true
+    end
+
+    it "returns false for a position with negative indices" do
+      expect(validPosition?([-1, 2])).to be false
+      expect(validPosition?([2, -1])).to be false
+    end
+
+    it "returns false for a position outside the board" do
+      expect(validPosition?([BOARD_SIZE, 0])).to be false
+      expect(validPosition?([0, BOARD_SIZE])).to be false
+    end
+  end
+
+  describe '#getMove' do
+    it "prompts the user and returns the input move" do
+      expect_any_instance_of(Object).to receive(:gets).and_return("up\n")
+      result = nil
+      expect { result = getMove }
+        .to output("Enter your move (up, down, left, right): ").to_stdout
+      expect(result).to eq("up")
     end
   end
 end
