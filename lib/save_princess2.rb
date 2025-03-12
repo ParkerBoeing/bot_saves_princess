@@ -24,4 +24,5 @@ def findPrincess(grid)
     col = row.index('p')
     return [i, col] if col
   end
+  nil
 end
