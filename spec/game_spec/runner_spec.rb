@@ -58,4 +58,55 @@ RSpec.describe 'Bot Saves Princess methods' do
       expect { displayInstructions }.to output(/Welcome to Bot Saves Princess!/).to_stdout
     end
   end
+
+  describe '#getBotAndPrincessPositions' do
+    it 'returns an array with two positions' do
+      positions = getBotAndPrincessPositions
+      expect(positions).to be_an(Array)
+      expect(positions.size).to eq(2)
+    end
+
+    it 'returns the bot position at the center of the board' do
+      positions = getBotAndPrincessPositions
+      bot_pos = positions.first
+      expected_center = [BOARD_SIZE / 2, BOARD_SIZE / 2]
+      expect(bot_pos).to eq(expected_center)
+    end
+
+    it 'returns a princess position that is different from the bot position' do
+      positions = getBotAndPrincessPositions
+      bot_pos, princess_pos = positions
+      expect(princess_pos).not_to eq(bot_pos)
+    end
+
+    it 'returns a princess position within the board boundaries' do
+      positions = getBotAndPrincessPositions
+      _, princess_pos = positions
+      expect(princess_pos[0]).to be_between(0, BOARD_SIZE - 1)
+      expect(princess_pos[1]).to be_between(0, BOARD_SIZE - 1)
+    end
+  end
+
+  describe '#calculateOptimalMoves' do
+    it 'calculates the number of optimized moves when princess is below and to the right' do
+      bot_pos = [0, 0]
+      princess_pos = [2, 3]
+      expected_moves = 2 + 3
+      expect(calculateOptimalMoves(bot_pos, princess_pos)).to eq(expected_moves)
+    end
+
+    it 'calculates the number of optimized moves when princess is above and to the left' do
+      bot_pos = [3, 3]
+      princess_pos = [1, 0]
+      expected_moves = (3 - 1).abs + (3 - 0).abs
+      expect(calculateOptimalMoves(bot_pos, princess_pos)).to eq(expected_moves)
+    end
+
+    it 'calculates the number of optimized moves for positions on the same row or column' do
+      bot_pos = [2, 1]
+      princess_pos = [2, 4]
+      expected_moves = (2 - 2).abs + (4 - 1).abs
+      expect(calculateOptimalMoves(bot_pos, princess_pos)).to eq(3)
+    end
+  end
 end
