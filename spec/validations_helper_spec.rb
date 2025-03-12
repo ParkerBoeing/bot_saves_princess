@@ -12,6 +12,40 @@ RSpec.describe 'Hacker Rank Bot Saves Princess' do
   end
 
   describe '#validateGrid' do
+    context 'when grid rows are strings with extra whitespace and spaces' do
+      it 'processes the grid correctly by stripping and splitting rows' do
+        grid = [
+          "  p - -  ",
+          "  - - -  ",
+          "  - - -  "
+        ]
+        expect { validateGrid(3, grid) }.not_to raise_error
+      end
+    end
+
+    context 'when grid rows are strings with extra whitespace but no spaces' do
+      it 'processes the grid correctly by stripping without splitting' do
+        grid = [
+          "  p--  ",
+          "  ---  ",
+          "  ---  "
+        ]
+        expect { validateGrid(3, grid) }.not_to raise_error
+      end
+    end
+
+    context 'when splitting results in a row of incorrect length' do
+      it 'raises GridError' do
+        grid = [
+          "  p - - -  ",
+          "  - - -  ",
+          "  - - -  "
+        ]
+        expect { validateGrid(3, grid) }
+          .to raise_error(GridError, /grid must have the same row and column count as given integer n/)
+      end
+    end
+
     context 'when grid is empty' do
       it 'raises GridError' do
         expect {validateGrid(3, [])}
