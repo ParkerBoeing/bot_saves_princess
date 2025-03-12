@@ -15,7 +15,8 @@ def displayBoard(board)
 end
 
 def displayInstructions
-  puts "Welcome to Bot Saves Princess!\n
+  puts "
+        Welcome to Bot Saves Princess!\n
         Where you, the noble bot, must rescue the princess in as few moves as you can.\n
         But the room is shrouded in fog!! Where can she be...?\n
         Your score will be calculated based on how many moves it takes you to find the princess\n
@@ -62,15 +63,40 @@ def getMove
   gets.chomp
 end
 
-# def playGame
-#   calculate bot positions
-#   generate board
-#   calculate number of moves for shortest path to princess
-#   display instructions
-#   display board
-#   end if user is on princess, reveal princess and display score. otherwise:
-#   get user input
-#   check if valid
-#   perform move
-#   increment up move counter
-# end
+def playGame
+  displayInstructions
+  bot_pos, princess_pos = getBotAndPrincessPositions
+  optimal_moves = calculateOptimalMoves(bot_pos, princess_pos)
+
+  move_count = 0
+
+  loop do
+    board = generateBoard(bot_pos, princess_pos)
+    displayBoard(board)
+    
+    break if bot_pos == princess_pos
+
+    direction = getMove
+    new_pos = moveBot(bot_pos, direction)
+
+    unless validPosition?(new_pos)
+      puts "Invalid move: out of bounds. Try again."
+      sleep(1)
+      next
+    end
+
+    bot_pos = new_pos
+    move_count += 1
+  end
+
+  board = generateBoard(bot_pos, princess_pos, true)
+  displayBoard(board)
+  puts "You've found the princess!"
+
+  score = (optimal_moves.to_f / move_count) * 100
+  puts "You've scored: #{score.round(2)} out of 100"
+end
+  
+if __FILE__ == $PROGRAM_NAME
+  playGame
+end

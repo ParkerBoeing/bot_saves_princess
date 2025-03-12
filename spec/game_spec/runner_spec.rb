@@ -163,4 +163,43 @@ RSpec.describe 'Bot Saves Princess methods' do
       expect(result).to eq("up")
     end
   end
+
+  describe "playGame method" do
+    before do
+      allow_any_instance_of(Object).to receive(:displayInstructions)
+      allow_any_instance_of(Object).to receive(:displayBoard)
+      allow_any_instance_of(Object).to receive(:sleep)
+    end
+  
+    it "completes the game and prints winning messages" do
+      allow_any_instance_of(Object).to receive(:getBotAndPrincessPositions)
+        .and_return([[0, 0], [0, 1]])
+      
+      allow_any_instance_of(Object).to receive(:calculateOptimalMoves)
+        .with([0, 0], [0, 1])
+        .and_return(1)
+      
+      allow_any_instance_of(Object).to receive(:getMove)
+        .and_return("right")
+    
+      expect { playGame }.to output(/You've found the princess!/).to_stdout
+    end
+
+    it "handles an invalid move by printing an error message, sleeping, and then continuing" do
+      allow_any_instance_of(Object).to receive(:getBotAndPrincessPositions)
+        .and_return([[0, 0], [0, 1]])
+      allow_any_instance_of(Object).to receive(:calculateOptimalMoves)
+        .with([0, 0], [0, 1])
+        .and_return(1)
+
+      allow_any_instance_of(Object).to receive(:getMove)
+        .and_return("up", "right")
+  
+      expect_any_instance_of(Object).to receive(:sleep).with(1).once
+  
+      expect {
+        playGame
+      }.to output(/Invalid move: out of bounds\. Try again\./).to_stdout
+    end
+  end
 end
