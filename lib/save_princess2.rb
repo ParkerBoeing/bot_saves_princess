@@ -14,8 +14,6 @@ def nextMove(n, r, c, grid)
     puts "LEFT"
   elsif princessRow == r && princessCol == c
     puts "You've found the princess!"
-  else
-    raise PrincessError, "Princess must be represented as the character p somewhere on the grid."
   end
 end
 
@@ -24,5 +22,5 @@ def findPrincess(grid)
     col = row.index('p')
     return [i, col] if col
   end
-  nil
+  raise PrincessError, "Princess must be represented as the character p somewhere on the grid."
 end
