@@ -4,6 +4,7 @@
 
 - [How to Copy and Paste into HackerRank](#how-to-copy-and-paste-into-hackerrank)
 - [Approach to Crafting Solutions](#approach-to-crafting-solutions)
+- [Gamification](#gamification)
 - [How to Run on Local Machine](#how-to-run-on-local-machine)
   - [Downloading Software](#downloading-software)
   - [Running the Program](#running-the-program)
@@ -164,6 +165,14 @@ nextMove(n,r,c,grid)
 - Once I felt confident I had a viable and performant solution, even though this was only for a HackerRank code challenge, I reworked the logic with a mindset for production / enterprise level code. This included abstracting out methods for better readability and introducing error handling for a better debugging experience.
 - I then tested and refined each of the solutions, ensuring robust and resilient code.
 
+## Gamification
+
+- After completing the HackerRank challenges, I wanted to push my ability to manipulate matrices further by creating a simple game.
+- The game generates a 5x5 grid, places the bot in the middle, and hides the princess somewhere on the grid undisclosed to the user.
+- The user has to navigate the grid to find the princess. Their score is calculated as follows ((minimum_number_of_moves_to_princess / users_number_of_moves) * 100)
+- Future iterations could include numerous rounds or allow a second user to hide the princess for the first user to find.
+- It was incredibly fun to make this game and, despite its simplicity, I hope anyone who plays has as much fun as I did making the game!
+
 ## How to Run on Local Machine
 
 ### Downloading Software
@@ -195,6 +204,8 @@ nextMove(n,r,c,grid)
     ```bash
     docker run --rm -it bot_saves_princess
     ```
+
+4. Running the docker container will execute the rspec test suite, display the results for 5 seconds, then initiate the bot saves princess game.
 
 ## About Me
 
