@@ -38,6 +38,30 @@ def calculateOptimalMoves(bot_pos, princess_pos)
   (princess_pos[0] - bot_pos[0]).abs + (princess_pos[1] - bot_pos[1]).abs
 end
 
+def moveBot(bot_pos, direction)
+  case direction.downcase
+  when "up"
+    [bot_pos[0] - 1, bot_pos[1]]
+  when "down"
+    [bot_pos[0] + 1, bot_pos[1]]
+  when "left"
+    [bot_pos[0], bot_pos[1] - 1]
+  when "right"
+    [bot_pos[0], bot_pos[1] + 1]
+  else
+    bot_pos
+  end
+end
+
+def validPosition?(pos)
+  pos[0].between?(0, BOARD_SIZE - 1) && pos[1].between?(0, BOARD_SIZE - 1)
+end
+
+def getMove
+  print "Enter your move (up, down, left, right): "
+  gets.chomp
+end
+
 # def playGame
 #   calculate bot positions
 #   generate board
