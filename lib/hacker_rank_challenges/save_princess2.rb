@@ -1,4 +1,4 @@
-require 'validations_helper'
+require_relative 'validations_helper'
 
 def nextMove(n, r, c, grid)
   validateGrid(n, grid)
