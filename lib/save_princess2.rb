@@ -1,5 +1,7 @@
+require 'validations_helper'
+
 def nextMove(n, r, c, grid)
-  validateInput(n, grid)
+  validateGrid(n, grid)
   princessRow, princessCol = findPrincess(grid)
 
   if princessRow > r
@@ -17,21 +19,9 @@ def nextMove(n, r, c, grid)
   end
 end
 
-def validateInput(n, grid)
-  raise GridError, "grid is empty" if grid.empty?
-  stripped_grid = grid.map { |row| row.strip }
-
-  if stripped_grid.size != n || stripped_grid.first.size != n
-    raise GridError, "grid must have the same row and column count as given integer n"
-  end
-end
-
 def findPrincess(grid)
   grid.each_with_index do |row, i|
     col = row.index('p')
     return [i, col] if col
   end
 end
-
-GridError     = Class.new(ArgumentError)
-PrincessError = Class.new(ArgumentError)

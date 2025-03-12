@@ -1,5 +1,8 @@
+require 'validations_helper'
+
 def displayPathtoPrincess(n, grid)
-  validateInput(n, grid)
+  validateInteger(n)
+  validateGrid(n, grid)
 
   center = n / 2
   corner = findPrincessCorner(grid)
@@ -25,24 +28,3 @@ def findPrincessCorner(grid)
   return :bottom_right if grid[-1][-1] == 'p'
   nil
 end
-
-def validateInput(n, grid)
-  raise GridError, "n must be an odd integer" if n.even?
-  raise GridError, "grid is empty" if grid.empty?
-  if grid.size != n || grid.first.size != n
-    raise GridError, "grid must have the same row and column count as given integer"
-  end
-end
-
-GridError     = Class.new(ArgumentError)
-PrincessError = Class.new(ArgumentError)
-
-# m = gets.to_i
-
-# grid = Array.new(m)
-
-# (0...m).each do |i|
-#     grid[i] = gets.strip
-# end
-
-# displayPathtoPrincess(m,grid)
