@@ -1,5 +1,5 @@
 require 'spec_helper'
-require './lib/save_princess1'
+require_relative '../../lib/hacker_rank_challenges/save_princess1'
 
 RSpec.describe 'Hacker Rank Bot Saves Princess' do
   describe '#findPrincessCorner' do

@@ -1,5 +1,5 @@
 require 'spec_helper'
-require './lib/validations_helper'
+require_relative '../../lib/hacker_rank_challenges/validations_helper'
 
 RSpec.describe 'Hacker Rank Bot Saves Princess' do
   describe '#validateInteger' do
