@@ -41,4 +41,46 @@ RSpec.describe 'Hacker Rank Bot Saves Princess' do
       end
     end
   end
+
+  describe '#findPrincessCorner' do
+    it 'returns :top_left if p is at grid[0][0]' do
+      grid = [
+        %w[p -],
+        %w[- -]
+      ]
+      expect(findPrincessCorner(grid)).to eq(:top_left) 
+    end
+
+    it 'returns :top_right if p is at grid[0][-1]' do
+      grid = [
+        %w[- p],
+        %w[- -]
+      ]
+      expect(findPrincessCorner(grid)).to eq(:top_right) 
+    end
+
+    it 'returns :bottom_left if p is at grid[-1][0]' do
+      grid = [
+        %w[- -],
+        %w[p -]
+      ]
+      expect(findPrincessCorner(grid)).to eq(:bottom_left) 
+    end
+
+    it 'returns :bottom_right if p is at grid[-1][-1]' do
+      grid = [
+        %w[- -],
+        %w[- p]
+      ]
+      expect(findPrincessCorner(grid)).to eq(:bottom_right) 
+    end
+
+    it 'returns nil if p isnt in any corner' do
+      grid = [
+        %w[- -],
+        %w[- -]
+      ]
+      expect(findPrincessCorner(grid)).to be_nil 
+    end
+  end
 end
