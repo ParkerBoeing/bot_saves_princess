@@ -1,7 +1,5 @@
 def displayPathtoPrincess(n, grid)
-  if validateInput(n, grid) == false
-    return
-  end
+  validateInput(n, grid)
 
   center = n / 2
   corner = findPrincessCorner(grid)
@@ -16,26 +14,28 @@ def displayPathtoPrincess(n, grid)
   when :bottom_right
     puts ("DOWN\nRIGHT\n" * center)
   else
-    raise ArgumentError, "Princess must be a 'p' in a corner of the grid."
+    raise PrincessError, "Princess must be a 'p' in a corner of the grid."
   end
 end
 
 def findPrincessCorner(grid)
-  return :top_left     if grid[0][0]     == 'p'
-  return :top_right    if grid[0][-1]    == 'p'
-  return :bottom_left  if grid[-1][0]    == 'p'
-  return :bottom_right if grid[-1][-1]   == 'p'
+  return :top_left     if grid[0][0]   == 'p'
+  return :top_right    if grid[0][-1]  == 'p'
+  return :bottom_left  if grid[-1][0]  == 'p'
+  return :bottom_right if grid[-1][-1] == 'p'
   nil
 end
 
 def validateInput(n, grid)
-  raise ArgumentError, "n must be an odd integer" if n.even?
-  raise ArgumentError, "grid is empty" if grid.empty?
+  raise GridError, "n must be an odd integer" if n.even?
+  raise GridError, "grid is empty" if grid.empty?
   if grid.size != n || grid.first.size != n
-    raise ArgumentError, "grid must have the same row and column count as given integer"
+    raise GridError, "grid must have the same row and column count as given integer"
   end
-  true
 end
+
+GridError     = Class.new(ArgumentError)
+PrincessError = Class.new(ArgumentError)
 
 # m = gets.to_i
 
