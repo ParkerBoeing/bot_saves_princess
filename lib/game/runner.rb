@@ -23,3 +23,30 @@ def displayInstructions
         Good luck and fare well brave little bot!"
   sleep(10)
 end
+
+def getBotAndPrincessPositions
+  bot_pos = [BOARD_SIZE / 2, BOARD_SIZE / 2]
+  princess_pos = nil
+  loop do
+    princess_pos = [rand(BOARD_SIZE), rand(BOARD_SIZE)]
+    break unless princess_pos == bot_pos
+  end
+  [bot_pos, princess_pos]
+end
+
+def calculateOptimalMoves(bot_pos, princess_pos)
+  (princess_pos[0] - bot_pos[0]).abs + (princess_pos[1] - bot_pos[1]).abs
+end
+
+# def playGame
+#   calculate bot positions
+#   generate board
+#   calculate number of moves for shortest path to princess
+#   display instructions
+#   display board
+#   end if user is on princess, reveal princess and display score. otherwise:
+#   get user input
+#   check if valid
+#   perform move
+#   increment up move counter
+# end
